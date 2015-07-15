@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Untappd Cache Test</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.js"></script>
+	<style type="text/css">
+		body {
+		  font-family: Helvetica, Arial, Sans-Serif;
+		}
+
+		.container {
+			padding: 20px;
+			width: 100%;
+			margin: 50px auto;
+		}
+
+		pre {
+		    font-family: "Courier 10 Pitch", Courier, monospace;
+		    font-size: 95%;
+		    line-height: 140%;
+		    white-space: pre;
+		    white-space: pre-wrap;
+		    white-space: -moz-pre-wrap;
+		    white-space: -o-pre-wrap;
+		}       
+
+		code {
+		    font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+		    font-size: 95%;
+		    line-height: 140%;
+		    white-space: pre;
+		    white-space: pre-wrap;
+		    white-space: -moz-pre-wrap;
+		    white-space: -o-pre-wrap;
+		    background: #faf8f0;
+		}
+
+		.container .served-from {
+			 font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+			 font-size: 15px;
+			 font-weight: bold;
+			 margin-bottom: 10px;
+		}
+
+		.container code {
+		    display: block;
+		    padding: 0.5em 1em;
+		    border: 1px solid #bebab0;
+		}
+
+		.container .loading {
+			font-size: 25px;
+		 	text-transform: uppercase;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+
+<div class="container">
+	<div class="loading">Loading...</div>
+	<div class="served-from"></div>
+	<div class="results" style="display: none;">
+		<code class="json"></code>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		// make the result to the new file (request.php) and pass the ID of the beer
+		$.get("/untappd-cache/request.php?bid=49892", function(data) {
+
+			$(".loading").hide();
+
+			// check if there is an error and handle the error
+			if (data.error) {
+				$(".results").html("There was an error: " + data.error); 
+				$(".results").show();
+			} else {
+
+				// check for an error from the Untappd API and handle it
+				if (data.meta.code != 200) {
+					$(".results").html("There was an error: " + JSON.stringify(data.response)); 
+					$(".results").show();
+				} else {
+					// you have good data, nwo you can parse it same way you normally do
+					$(".served-from").html("Served From: " + data.cacheType);
+					$(".results .json").html("<pre>"+JSON.stringify(data.response, null, 2)+"</pre>");
+					$(".results").show();
+				}	
+			}
+		});
+	})
+
+
+</script>
+</body>
+</html>
