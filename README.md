@@ -15,7 +15,7 @@ In order to get access the API - go https://untappd.com/api and request an API t
 
 1. Do a ```git clone https://github.com/gregavola/untappd-cache``` to pull down the respository
 2. Add your ```client_id``` and ```client_secret``` to the ```request.php``` on line 13, 14.
-3. Take a look at the examples in ```ex,aple.html``` on how to query the ```request.php``` file by passing the ```bid``` in question.
+3. Take a look at the examples in ```exmaple.html``` on how to query the ```request.php``` file by passing the ```bid``` in question.
 
 **Note**: When deploying to your server, make sure the ```cache``` folder has permissions of 777 (is writeable). The full path is located on line 20 of ```request.php```.
 
