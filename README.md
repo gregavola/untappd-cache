@@ -25,7 +25,7 @@ When you are completed testing you can deploy the following files to your server
 - ```handleCache.php```
 - ```request.php```.
 
-You will the make ```ajax``` requests to ```http://yourwesite.com/untappd-cache/request.php?uid=###&utype=***``` where ### is your Beer ID and *** is your Type (ie. beer, brewery, venue, ...)
+You will the make ```ajax``` requests to ```http://yourwebsite.com/untappd-cache/request.php?uid=###&utype=***``` where ### is your Untappd ID of an item and *** is your Type (ie. beer, brewery, venue, ...)
 
 # To Do
 Error Handling
