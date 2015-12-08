@@ -26,13 +26,13 @@ $fileTTL = 3600;
 $return_array = array();
 
 // check if the query string exists as is numeric
-if (isset($_GET['bid']) && is_numeric($_GET['bid'])) {
+if (isset($_GET['uid']) && is_numeric($_GET['uid'])) {
 	
-	// the 'bid' is the Untappd Beer ID of Maine Beer you want to query
-	$bid = $_GET['bid'];
+	// the 'uid' is the Untappd ID you want to query alone with the 'utype'
+	$uid = $_GET['uid'];
 
 	// construct the file to save
-	$cachedFile = "untappd-checkin-feed-".$bid.".json";
+	$cachedFile = "untappd-checkin-feed-".$uid.".json";
 	$cacheFilePath = $cachePath . "/". $cachedFile;
 
 	// get the last modified date of the file to determine when it was created/updated
@@ -50,7 +50,7 @@ if (isset($_GET['bid']) && is_numeric($_GET['bid'])) {
 			// cache has expired - let's go ahead and re-request data.
 
 			// request the data from the api, with a limit of 15 checkins (you can increase if need more)
-			$result = $untappd->get("/beer/checkins/".$bid, array("limit" => "15"));
+			$result = $untappd->get("/beer/checkins/".$uid, array("limit" => "15"));
 
 			// check if we get back a result
 			$return_array = handleCacheWrite($cacheFilePath, $result);
@@ -75,14 +75,14 @@ if (isset($_GET['bid']) && is_numeric($_GET['bid'])) {
 		// file doesn't exist, make call to Untappd to get data.
 
 		// request the data from the api, with a limit of 15 checkins (you can increase if need more)
-		$result = $untappd->get("/beer/checkins/".$bid, array("limit" => "15"));
+		$result = $untappd->get("/beer/checkins/".$uid, array("limit" => "15"));
 
 		// check if we get back a result
 		$return_array = handleCacheWrite($cacheFilePath, $result);
 	}
 } else {
-	// throw a error when BID isn't passed.
-	$return_array["error"] = "Invalid Beer ID";
+	// throw a error when UID isn't passed.
+	$return_array["error"] = "Invalid Untappd ID";
 }
 
 // output 
